@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.nsu.fit.np'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'commons-cli:commons-cli:1.5.0'
+    implementation 'org.apache.commons:commons-compress:1.21'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
+    implementation 'log4j:log4j:1.2.17'
+    implementation 'org.slf4j:slf4j-log4j12:1.7.18'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
