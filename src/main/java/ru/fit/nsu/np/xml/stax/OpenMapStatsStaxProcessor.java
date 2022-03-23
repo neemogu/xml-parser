@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 import static ru.fit.nsu.np.openmap.OpenMapXmlNames.*;
 
-public class OpenMapStatsCompressedXmlStaxProcessor extends CompressedXmlStaxProcessor<OpenMapXmlStats> implements OpenMapXmlStats {
+public class OpenMapStatsStaxProcessor extends CompressedXmlStaxProcessor<OpenMapXmlStats> implements OpenMapXmlStats {
 
     private Map<String, MutableLong> userToChanges;
     private Map<String, MutableLong> keyNameToTags;
@@ -57,11 +57,11 @@ public class OpenMapStatsCompressedXmlStaxProcessor extends CompressedXmlStaxPro
 
     @Override
     public Map<String, MutableLong> getKeyNameToTagsStats() {
-        return userToChanges;
+        return Map.copyOf(userToChanges);
     }
 
     @Override
     public Map<String, MutableLong> getUserToChangesStats() {
-        return keyNameToTags;
+        return Map.copyOf(keyNameToTags);
     }
 }

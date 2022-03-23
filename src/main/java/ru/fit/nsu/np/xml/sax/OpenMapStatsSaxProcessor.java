@@ -4,7 +4,7 @@ import ru.fit.nsu.np.openmap.OpenMapDataPrinter;
 
 import java.util.function.Consumer;
 
-public class OpenMapStatsCompressedXmlSaxProcessor extends CompressedXmlSaxProcessor<OpenMapHandler> {
+public class OpenMapStatsSaxProcessor extends CompressedXmlSaxProcessor<OpenMapHandler> {
 
     @Override
     protected Consumer<OpenMapHandler> getResultConsumer() {

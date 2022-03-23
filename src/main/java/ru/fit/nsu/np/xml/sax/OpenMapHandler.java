@@ -37,11 +37,11 @@ public class OpenMapHandler extends SaxHandler implements OpenMapXmlStats {
 
     @Override
     public Map<String, MutableLong> getKeyNameToTagsStats() {
-        return keyNameToTags;
+        return Map.copyOf(keyNameToTags);
     }
 
     @Override
     public Map<String, MutableLong> getUserToChangesStats() {
-        return userToChanges;
+        return Map.copyOf(userToChanges);
     }
 }
