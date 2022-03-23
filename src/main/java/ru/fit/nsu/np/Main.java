@@ -1,6 +1,5 @@
 package ru.fit.nsu.np;
 
-import ru.fit.nsu.np.xml.sax.OpenMapStatsCompressedXmlSaxProcessor;
 import ru.fit.nsu.np.xml.stax.OpenMapStatsCompressedXmlStaxProcessor;
 
 import static ru.fit.nsu.np.cli.OptionParser.getFileName;
