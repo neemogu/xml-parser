@@ -1,6 +1,6 @@
 /.idea/
 /*.bz2
-/src/*/jaxb/
+/src/main/java/ru/fit/nsu/np/jaxb/
 
 ### Java ###
 *.class
