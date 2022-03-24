@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class OpenMapStatsJaxbProcessor extends CompressedXmlJaxbProcessor<OpenMapXmlStats, Osm> implements OpenMapXmlStats {
+public class OpenMapStatsJaxbProcessor extends CompressedXmlJaxbProcessor<OpenMapXmlStats, Node> implements OpenMapXmlStats {
 
     private Map<String, MutableLong> userToChanges;
     private Map<String, MutableLong> keyNameToTags;
@@ -32,8 +32,8 @@ public class OpenMapStatsJaxbProcessor extends CompressedXmlJaxbProcessor<OpenMa
     }
 
     @Override
-    protected Class<Osm> getXmlClass() {
-        return Osm.class;
+    protected Class<Node> getXmlClass() {
+        return Node.class;
     }
 
     @Override
@@ -48,17 +48,15 @@ public class OpenMapStatsJaxbProcessor extends CompressedXmlJaxbProcessor<OpenMa
     }
 
     @Override
-    protected void processXmlObject(Osm xmlObject) {
-        for (Node node : xmlObject.getNode()) {
-            String user = node.getUser();
-            if (user != null) {
-                userToChanges.computeIfAbsent(node.getUser(), (u) -> new MutableLong(0)).increment();
-            }
-            for (Tag tag : node.getTag()) {
-                String key = tag.getK();
-                if (key != null) {
-                    keyNameToTags.computeIfAbsent(tag.getK(), (k) -> new MutableLong(0)).increment();
-                }
+    protected void processXmlObject(Node node) {
+        String user = node.getUser();
+        if (user != null) {
+            userToChanges.computeIfAbsent(node.getUser(), (u) -> new MutableLong(0)).increment();
+        }
+        for (Tag tag : node.getTag()) {
+            String key = tag.getK();
+            if (key != null) {
+                keyNameToTags.computeIfAbsent(tag.getK(), (k) -> new MutableLong(0)).increment();
             }
         }
     }

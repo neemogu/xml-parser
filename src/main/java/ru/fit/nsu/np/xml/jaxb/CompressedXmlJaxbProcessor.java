@@ -18,14 +18,19 @@ public abstract class CompressedXmlJaxbProcessor<Res, Xml> extends CompressedXml
         initResult();
         XMLInputFactory xif = XMLInputFactory.newFactory();
         XMLStreamReader xsr = xif.createXMLStreamReader(inputStream);
-        xsr = new XsiTypeReader(xsr);
+        xsr = new OsmTypeReader(xsr);
         JAXBContext context = JAXBContext.newInstance(getXmlClass());
         Unmarshaller unmarshaller = context.createUnmarshaller();
         log.info("Started to unmarshal xml file");
-        Xml xmlObject = (Xml) unmarshaller.unmarshal(xsr);
-        log.info("Finished to unmarshal xml file, started processing an object...");
-        processXmlObject(xmlObject);
-        log.info("Finished processing xml object");
+        while (xsr.hasNext()) {
+            if (xsr.isStartElement() && xsr.getLocalName().equals(getXmlClass().getSimpleName().toLowerCase())) {
+                Xml xmlObject = (Xml) unmarshaller.unmarshal(xsr);
+                processXmlObject(xmlObject);
+            } else {
+                xsr.next();
+            }
+        }
+        log.info("Finished to unmarshal xml file");
         return getResult();
     }
 
@@ -37,9 +42,9 @@ public abstract class CompressedXmlJaxbProcessor<Res, Xml> extends CompressedXml
 
     protected abstract Res getResult();
 
-    private class XsiTypeReader extends StreamReaderDelegate {
+    private class OsmTypeReader extends StreamReaderDelegate {
 
-        public XsiTypeReader(XMLStreamReader reader) {
+        public OsmTypeReader(XMLStreamReader reader) {
             super(reader);
         }
 
