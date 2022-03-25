@@ -1,21 +1,31 @@
 package ru.fit.nsu.np.xml.jaxb;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import ru.fit.nsu.np.jaxb.Node;
 import ru.fit.nsu.np.openmap.OpenMapDataSaver;
 import ru.fit.nsu.np.openmap.dao.NodeEntity;
+import ru.fit.nsu.np.openmap.service.NodeService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+@Service
+@RequiredArgsConstructor
 public class OsmNodeListJaxbProcessor extends CompressedXmlJaxbProcessor<List<NodeEntity>, Node> {
+
+    private final NodeService nodeService;
 
     private List<NodeEntity> nodes;
 
     @Override
     protected Consumer<List<NodeEntity>> getResultConsumer() {
-        return OpenMapDataSaver::saveNodes;
+        return (list) -> {
+            list = list.subList(0, Math.min(list.size(), 10_000));
+            nodeService.save(list);
+        };
     }
 
     @Override

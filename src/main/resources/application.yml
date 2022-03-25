@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+spring:
+  liquibase:
+    change-log: classpath:liquibase/changeLog.xml
+  datasource:
+    url: jdbc:postgresql://localhost:5432/osm
+    username: postgres
+    password: 1234

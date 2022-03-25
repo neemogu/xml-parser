@@ -2,15 +2,26 @@ package ru.fit.nsu.np.openmap.dao;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.fit.nsu.np.converters.MemberListConverter;
+import ru.fit.nsu.np.converters.TagHStoreConverter;
 import ru.fit.nsu.np.jaxb.Relation;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
+@Entity
+@Table(name = "relation")
 public class RelationEntity extends OsmPersistentEntity {
+
+    @Convert(converter = MemberListConverter.class)
+    @Column(name = "members")
     private List<MemberBean> members;
+
+    @Convert(converter = TagHStoreConverter.class)
+    @Column(name = "tags")
     private List<TagBean> tags;
 
     public static RelationEntity fromXml(Relation xmlObject) {

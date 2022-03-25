@@ -1,5 +1,7 @@
 plugins {
     id 'java-library'
+    id 'org.springframework.boot' version '2.6.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 group 'ru.nsu.fit.np'
@@ -15,6 +17,11 @@ configurations {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.liquibase:liquibase-core'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     jaxb (
             'com.sun.xml.bind:jaxb-xjc:2.3.1',
             'com.sun.xml.bind:jaxb-impl:2.3.1',
@@ -31,8 +38,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
 
-    implementation 'log4j:log4j:1.2.17'
-    implementation 'org.slf4j:slf4j-log4j12:1.7.18'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 
