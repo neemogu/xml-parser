@@ -18,7 +18,8 @@ public class NodeEntity extends OsmPersistentEntity {
         NodeEntity entity = new NodeEntity();
         entity.setId(xmlObject.getId() == null ? null : xmlObject.getId().longValue());
         entity.setChangeset(xmlObject.getChangeset() == null ? null : xmlObject.getChangeset().longValue());
-        entity.setTimestamp(xmlObject.getTimestamp() == null ? null : xmlObject.getTimestamp().toGregorianCalendar().getTime());
+        entity.setTimestamp(xmlObject.getTimestamp() == null ? null :
+                xmlObject.getTimestamp().toGregorianCalendar().toZonedDateTime().toLocalDateTime());
         entity.setUid(xmlObject.getUid() == null ? null : xmlObject.getUid().longValue());
         entity.setVersion(xmlObject.getVersion() == null ? null : xmlObject.getVersion().longValue());
         entity.setUser(xmlObject.getUser());
