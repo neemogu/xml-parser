@@ -14,6 +14,7 @@ public class OpenMapDataSaver {
     );
 
     public static void saveNodes(List<NodeEntity> nodes) {
+        nodes = nodes.subList(0, Math.min(nodes.size(), 10000)); // insert first 10000 records for calculating taken time
         for (NodeQueryExecutor queryExecutor : queryExecutors) {
             try {
                 long start = System.currentTimeMillis();

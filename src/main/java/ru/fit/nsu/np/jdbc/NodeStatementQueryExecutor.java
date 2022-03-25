@@ -18,15 +18,19 @@ public class NodeStatementQueryExecutor implements NodeQueryExecutor {
     @Override
     public void saveNodes(List<NodeEntity> nodes) throws Exception {
         try (Connection connection = DriverManager.getConnection(connectionStr, user, password)) {
+            connection.setAutoCommit(false);
             try (Statement statement = connection.createStatement()) {
                 log.info("Started saving nodes using NodeStatementQueryExecutor");
                 for (NodeEntity nodeEntity : nodes) {
                     String insertQuery = "INSERT INTO node " +
                             "(id, \"user\", uid, visible, version, changeset, timestamp, lat, lon, tags) " +
                             "VALUES (" + nodeToCsv(nodeEntity) + ")";
-                    log.info("Executing update: _{}_", insertQuery);
                     statement.execute(insertQuery);
                 }
+                connection.commit();
+            } catch (Exception e) {
+                connection.rollback();
+                throw e;
             }
         }
     }
@@ -40,7 +44,7 @@ public class NodeStatementQueryExecutor implements NodeQueryExecutor {
             log.error("Failed to stringify tags", e);
         }
         return  (nodeEntity.getId() == null ? "NULL" : nodeEntity.getId()) + "," +
-                (nodeEntity.getUser() == null ? "NULL" : "'" + nodeEntity.getUser() + "'") + "," +
+                (nodeEntity.getUser() == null ? "NULL" : "'" + nodeEntity.getUser().replaceAll("'", "''") + "'") + "," +
                 (nodeEntity.getUid() == null ? "NULL" : nodeEntity.getUid()) + "," +
                 (nodeEntity.getVisible() == null ? "NULL" : nodeEntity.getVisible()) + "," +
                 (nodeEntity.getVersion() == null ? "NULL" : nodeEntity.getVersion()) + "," +
