@@ -8,8 +8,9 @@ import ru.fit.nsu.np.openmap.dao.NodeEntity;
 import ru.fit.nsu.np.openmap.repository.NodeRepository;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NodeService extends BaseService<NodeEntity, NodeBean, NodeRepository> {
@@ -62,5 +63,9 @@ public class NodeService extends BaseService<NodeEntity, NodeBean, NodeRepositor
         if (found != null) {
             delete(found);
         }
+    }
+
+    public List<NodeBean> getNodesInRadius(double lat, double lon, double radius) {
+        return repository.getNodesInRadius(lat, lon, radius).stream().map(this::loadBean).collect(Collectors.toList());
     }
 }

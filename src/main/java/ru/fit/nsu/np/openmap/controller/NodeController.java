@@ -1,6 +1,7 @@
 package ru.fit.nsu.np.openmap.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/node")
+@Slf4j
 public class NodeController {
 
     private final NodeService nodeService;
@@ -40,5 +42,12 @@ public class NodeController {
     @GetMapping("/list")
     public List<NodeBean> getNodes(@PageableDefault Pageable pageable) {
         return nodeService.loadAll(pageable);
+    }
+
+    @GetMapping("/radius")
+    public List<NodeBean> getNodesInRadius(@RequestParam(name = "lat") double lat,
+                                           @RequestParam(name = "lon") double lon,
+                                           @RequestParam(name = "radius") double radius) {
+        return nodeService.getNodesInRadius(lat, lon, radius);
     }
 }
