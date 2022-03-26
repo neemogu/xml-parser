@@ -1,6 +1,5 @@
 package ru.fit.nsu.np.xml.sax;
 
-import lombok.Getter;
 import org.apache.commons.lang3.mutable.MutableLong;
 import org.xml.sax.Attributes;
 import ru.fit.nsu.np.openmap.OpenMapXmlStats;

@@ -2,7 +2,6 @@ package ru.fit.nsu.np.xml.jaxb;
 
 import org.apache.commons.lang3.mutable.MutableLong;
 import ru.fit.nsu.np.jaxb.Node;
-import ru.fit.nsu.np.jaxb.Osm;
 import ru.fit.nsu.np.jaxb.Tag;
 import ru.fit.nsu.np.openmap.OpenMapDataPrinter;
 import ru.fit.nsu.np.openmap.OpenMapXmlStats;

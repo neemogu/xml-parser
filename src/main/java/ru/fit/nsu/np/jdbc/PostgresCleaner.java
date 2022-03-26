@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-import static ru.fit.nsu.np.jdbc.PostgresConnectionConfig.connectionStr;
-import static ru.fit.nsu.np.jdbc.PostgresConnectionConfig.user;
-import static ru.fit.nsu.np.jdbc.PostgresConnectionConfig.password;
+import static ru.fit.nsu.np.jdbc.PostgresConnectionConfig.*;
 
 public class PostgresCleaner {
 

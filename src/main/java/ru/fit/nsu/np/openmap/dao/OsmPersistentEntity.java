@@ -3,13 +3,10 @@ package ru.fit.nsu.np.openmap.dao;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.math.BigInteger;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -20,7 +17,7 @@ public abstract class OsmPersistentEntity {
     @Column(name = "id")
     protected Long id;
 
-    @Column(name = "user")
+    @Column(name = "\"user\"")
     protected String user;
 
     @Column(name = "uid")

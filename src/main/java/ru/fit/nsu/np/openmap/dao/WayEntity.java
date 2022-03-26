@@ -1,9 +1,12 @@
 package ru.fit.nsu.np.openmap.dao;
 
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLHStoreType;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import ru.fit.nsu.np.converters.NdListConverter;
-import ru.fit.nsu.np.converters.TagHStoreConverter;
+import ru.fit.nsu.np.jaxb.Tag;
 import ru.fit.nsu.np.jaxb.Way;
 
 import javax.persistence.Column;
@@ -11,21 +14,23 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "way")
+@TypeDef(name = "hstore", typeClass = PostgreSQLHStoreType.class)
 public class WayEntity extends OsmPersistentEntity {
 
     @Convert(converter = NdListConverter.class)
     @Column(name = "nds")
     private List<NdBean> nds;
 
-    @Convert(converter = TagHStoreConverter.class)
     @Column(name = "tags")
-    private List<TagBean> tags;
+    @Type(type = "hstore")
+    private Map<String, String> tags;
 
     public static WayEntity fromXml(Way xmlObject) {
         WayEntity entity = new WayEntity();
@@ -37,7 +42,7 @@ public class WayEntity extends OsmPersistentEntity {
         entity.setVersion(xmlObject.getVersion() == null ? null : xmlObject.getVersion().longValue());
         entity.setUser(xmlObject.getUser());
         entity.setVisible(xmlObject.isVisible());
-        entity.setTags(xmlObject.getTag().stream().map(TagBean::fromXml).collect(Collectors.toList()));
+        entity.setTags(xmlObject.getTag().stream().collect(Collectors.toMap(Tag::getK, Tag::getV)));
         entity.setNds(xmlObject.getNd().stream().map(NdBean::fromXml).collect(Collectors.toList()));
         return entity;
     }

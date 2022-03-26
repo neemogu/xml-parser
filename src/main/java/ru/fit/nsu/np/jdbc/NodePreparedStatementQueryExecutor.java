@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import ru.fit.nsu.np.openmap.dao.NodeEntity;
 
 import java.sql.*;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static ru.fit.nsu.np.jdbc.PostgresConnectionConfig.*;

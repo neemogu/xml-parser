@@ -1,26 +1,29 @@
 package ru.fit.nsu.np.openmap.dao;
 
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLHStoreType;
 import lombok.Getter;
 import lombok.Setter;
-import ru.fit.nsu.np.converters.TagHStoreConverter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import ru.fit.nsu.np.jaxb.Node;
+import ru.fit.nsu.np.jaxb.Tag;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "node")
+@TypeDef(name = "hstore", typeClass = PostgreSQLHStoreType.class)
 public class NodeEntity extends OsmPersistentEntity {
 
-    @Convert(converter = TagHStoreConverter.class)
     @Column(name = "tags")
-    private List<TagBean> tags;
+    @Type(type = "hstore")
+    private Map<String, String> tags;
 
     @Column(name = "lat")
     protected Double lat;
@@ -40,7 +43,7 @@ public class NodeEntity extends OsmPersistentEntity {
         entity.setVisible(xmlObject.isVisible());
         entity.setLat(xmlObject.getLat());
         entity.setLon(xmlObject.getLon());
-        entity.setTags(xmlObject.getTag().stream().map(TagBean::fromXml).collect(Collectors.toList()));
+        entity.setTags(xmlObject.getTag().stream().collect(Collectors.toMap(Tag::getK, Tag::getV)));
         return entity;
     }
 }

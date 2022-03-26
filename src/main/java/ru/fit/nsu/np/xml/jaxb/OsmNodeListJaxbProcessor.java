@@ -3,7 +3,6 @@ package ru.fit.nsu.np.xml.jaxb;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.fit.nsu.np.jaxb.Node;
-import ru.fit.nsu.np.openmap.OpenMapDataSaver;
 import ru.fit.nsu.np.openmap.dao.NodeEntity;
 import ru.fit.nsu.np.openmap.service.NodeService;
 

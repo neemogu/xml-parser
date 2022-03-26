@@ -1,6 +1,5 @@
 package ru.fit.nsu.np.xml.stax;
 
-import lombok.Getter;
 import org.apache.commons.lang3.mutable.MutableLong;
 import ru.fit.nsu.np.openmap.OpenMapDataPrinter;
 import ru.fit.nsu.np.openmap.OpenMapXmlStats;
