@@ -16,7 +16,7 @@ public abstract class OsmListJaxbProcessor<T extends PersistentEntity, Xml> exte
     @Override
     protected Consumer<List<T>> getResultConsumer() {
         return (list) -> {
-            list = list.subList(0, Math.min(list.size(), 10_000));
+            list = list.subList(0, Math.min(list.size(), 100_000));
             list.forEach(e -> e.setId(null));
             getService().save(list);
         };
