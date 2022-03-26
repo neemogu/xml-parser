@@ -4,7 +4,7 @@ CREATE EXTENSION IF NOT EXISTS earthdistance;
 
 CREATE TABLE node
 (
-    "id"        bigint PRIMARY KEY,
+    "id"        bigserial PRIMARY KEY,
     "user"      varchar(100),
     "uid"       bigint,
     "visible"   boolean,
@@ -18,7 +18,7 @@ CREATE TABLE node
 
 CREATE TABLE way
 (
-    "id"        bigint PRIMARY KEY,
+    "id"        bigserial PRIMARY KEY,
     "user"      varchar(100),
     "uid"       bigint,
     "visible"   boolean,
@@ -31,7 +31,7 @@ CREATE TABLE way
 
 CREATE TABLE relation
 (
-    "id"        bigint PRIMARY KEY,
+    "id"        bigserial PRIMARY KEY,
     "user"      varchar(100),
     "uid"       bigint,
     "visible"   boolean,
