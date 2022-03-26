@@ -31,11 +31,7 @@ public class WayService extends BaseService<WayEntity, WayBean, WayRepository> {
         WayEntity way = new WayEntity();
         BeanUtils.copyProperties(bean, way, ignoredFields);
 
-        way.setId(null);
-        way.setUser("Admin");
-        way.setUid(1L);
-        way.setVersion(1L);
-        way.setTimestamp(LocalDateTime.now());
+        setCreateFields(way);
 
         return loadBean(save(way));
     }
@@ -48,10 +44,7 @@ public class WayService extends BaseService<WayEntity, WayBean, WayRepository> {
         }
         found.setNds(bean.getNds());
         found.setTags(bean.getTags());
-        found.setChangeset(bean.getChangeset());
-        found.setTimestamp(LocalDateTime.now());
-        found.setVersion(found.getVersion() + 1);
-        found.setVisible(bean.getVisible());
+        setUpdateFields(found, bean);
 
         return loadBean(save(found));
     }

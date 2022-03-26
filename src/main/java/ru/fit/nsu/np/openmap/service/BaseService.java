@@ -9,6 +9,7 @@ import ru.fit.nsu.np.openmap.bean.EntityBean;
 import ru.fit.nsu.np.openmap.dao.PersistentEntity;
 import ru.fit.nsu.np.openmap.repository.EntityRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,5 +85,18 @@ public abstract class BaseService<T extends PersistentEntity, B extends EntityBe
         return repository.findAll(pageable).getContent().stream().map(this::loadBean).collect(Collectors.toList());
     }
 
+    protected void setCreateFields(T entity) {
+        entity.setId(null);
+        entity.setUser("Admin");
+        entity.setUid(1L);
+        entity.setVersion(1L);
+        entity.setTimestamp(LocalDateTime.now());
+    }
 
+    protected void setUpdateFields(T entity, B bean) {
+        entity.setChangeset(bean.getChangeset());
+        entity.setTimestamp(LocalDateTime.now());
+        entity.setVersion(entity.getVersion() + 1);
+        entity.setVisible(bean.getVisible());
+    }
 }

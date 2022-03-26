@@ -37,11 +37,7 @@ public class NodeService extends BaseService<NodeEntity, NodeBean, NodeRepositor
         node.setLon(bean.getLon().doubleValue());
         node.setLat(bean.getLat().doubleValue());
 
-        node.setId(null);
-        node.setUser("Admin");
-        node.setUid(1L);
-        node.setVersion(1L);
-        node.setTimestamp(LocalDateTime.now());
+        setCreateFields(node);
 
         return loadBean(save(node));
     }
@@ -55,10 +51,7 @@ public class NodeService extends BaseService<NodeEntity, NodeBean, NodeRepositor
         found.setLat(bean.getLat().doubleValue());
         found.setLon(bean.getLon().doubleValue());
         found.setTags(bean.getTags());
-        found.setChangeset(bean.getChangeset());
-        found.setTimestamp(LocalDateTime.now());
-        found.setVersion(found.getVersion() + 1);
-        found.setVisible(bean.getVisible());
+        setUpdateFields(found, bean);
 
         return loadBean(save(found));
     }

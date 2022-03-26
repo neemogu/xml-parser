@@ -31,11 +31,7 @@ public class RelationService extends BaseService<RelationEntity, RelationBean, R
         RelationEntity relation = new RelationEntity();
         BeanUtils.copyProperties(bean, relation, ignoredFields);
 
-        relation.setId(null);
-        relation.setUser("Admin");
-        relation.setUid(1L);
-        relation.setVersion(1L);
-        relation.setTimestamp(LocalDateTime.now());
+        setCreateFields(relation);
 
         return loadBean(save(relation));
     }
@@ -48,10 +44,7 @@ public class RelationService extends BaseService<RelationEntity, RelationBean, R
         }
         found.setMembers(bean.getMembers());
         found.setTags(bean.getTags());
-        found.setChangeset(bean.getChangeset());
-        found.setTimestamp(LocalDateTime.now());
-        found.setVersion(found.getVersion() + 1);
-        found.setVisible(bean.getVisible());
+        setUpdateFields(found, bean);
 
         return loadBean(save(found));
     }
