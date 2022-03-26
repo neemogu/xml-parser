@@ -3,9 +3,7 @@ package ru.fit.nsu.np.openmap.dao;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -14,6 +12,7 @@ import java.time.LocalDateTime;
 public abstract class PersistentEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected Long id;
 
