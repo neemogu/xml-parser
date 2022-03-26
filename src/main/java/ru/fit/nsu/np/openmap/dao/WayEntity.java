@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "way")
 @TypeDef(name = "hstore", typeClass = PostgreSQLHStoreType.class)
-public class WayEntity extends OsmPersistentEntity {
+public class WayEntity extends PersistentEntity {
 
     @Convert(converter = NdListConverter.class)
     @Column(name = "nds")

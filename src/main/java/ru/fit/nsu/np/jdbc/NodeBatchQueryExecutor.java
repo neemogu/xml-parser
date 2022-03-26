@@ -2,6 +2,7 @@ package ru.fit.nsu.np.jdbc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import ru.fit.nsu.np.converters.TagHStoreConverter;
 import ru.fit.nsu.np.openmap.dao.NodeEntity;
 
 import java.sql.*;
@@ -20,11 +21,11 @@ public class NodeBatchQueryExecutor implements NodeQueryExecutor {
                     "(id, \"user\", uid, visible, version, changeset, timestamp, lat, lon, tags) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement statement = connection.prepareStatement(preparedSql)) {
+                TagHStoreConverter converter = new TagHStoreConverter();
                 for (NodeEntity nodeEntity : nodes) {
-                    ObjectMapper mapper = new ObjectMapper();
                     String tags = null;
                     try {
-                        tags = mapper.writeValueAsString(nodeEntity.getTags());
+                        tags = converter.convertToDatabaseColumn(nodeEntity.getTags());
                     } catch (Exception e) {
                         log.error("Failed to stringify tags", e);
                     }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class OsmPersistentEntity {
+public abstract class PersistentEntity {
 
     @Id
     @Column(name = "id")

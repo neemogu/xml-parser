@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "node")
 @TypeDef(name = "hstore", typeClass = PostgreSQLHStoreType.class)
-public class NodeEntity extends OsmPersistentEntity {
+public class NodeEntity extends PersistentEntity {
 
     @Column(name = "tags")
     @Type(type = "hstore")

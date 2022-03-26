@@ -30,7 +30,8 @@ public abstract class CompressedXmlProcessor<T> {
             resultConsumer.accept(processStream(bZip2InputStream));
             log.info("Finished processing '" + fileName + "' compressed xml file");
         } catch (Exception e) {
-            log.error("Error while processing xml file {}", fileName, e);
+            log.error("Error while processing xml file {}", fileName);
+            throw new RuntimeException(e);
         }
     }
 

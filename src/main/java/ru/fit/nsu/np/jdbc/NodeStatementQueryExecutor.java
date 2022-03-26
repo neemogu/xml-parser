@@ -1,7 +1,8 @@
 package ru.fit.nsu.np.jdbc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.postgresql.util.HStoreConverter;
+import ru.fit.nsu.np.converters.TagHStoreConverter;
 import ru.fit.nsu.np.openmap.dao.NodeEntity;
 
 import java.sql.Connection;
@@ -14,6 +15,8 @@ import static ru.fit.nsu.np.jdbc.PostgresConnectionConfig.*;
 
 @Slf4j
 public class NodeStatementQueryExecutor implements NodeQueryExecutor {
+
+    private final TagHStoreConverter tagHStoreConverter = new TagHStoreConverter();
 
     @Override
     public void saveNodes(List<NodeEntity> nodes) throws Exception {
@@ -36,10 +39,12 @@ public class NodeStatementQueryExecutor implements NodeQueryExecutor {
     }
 
     private String nodeToCsv(NodeEntity nodeEntity) {
-        ObjectMapper mapper = new ObjectMapper();
         String tags = "NULL";
         try {
-            tags = mapper.writeValueAsString(nodeEntity.getTags());
+            tags = tagHStoreConverter.convertToDatabaseColumn(nodeEntity.getTags());
+            if (tags == null) {
+                tags = "NULL";
+            }
         } catch (Exception e) {
             log.error("Failed to stringify tags", e);
         }
